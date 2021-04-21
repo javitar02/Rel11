@@ -1,9 +1,10 @@
 package ej8;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Receta implements Comparable <Receta>{
+public class Receta implements Comparable<Receta>{
 	private String nombreReceta;
 	private int minutosDePreparacion;
 	private HashSet<Ingrediente> ingredientes;
@@ -37,41 +38,72 @@ public class Receta implements Comparable <Receta>{
 
 	public void annadirIngrediente(Ingrediente ingredienteNuevo) {
 		int cantidadNueva=ingredienteNuevo.getCantidad();
-		if(ingredientes.contains(ingredienteNuevo)) {
-			cantidadNueva++;
-			ingredienteNuevo.setCantidad(cantidadNueva);
+		boolean annadido=false;
+
+//      FORMA 1 DE RECORRER (MAS INEFICIENTE YA QUE RECORRE TODA LA COLECCION)		
+//		for (Ingrediente o:ingredientes) {
+//			if(o.getNombreIngrediente().equals(ingredienteNuevo.getNombreIngrediente())) {
+//				o.setCantidad(cantidadNueva+o.getCantidad());
+//			}
+//			
+//		}
+//		ingredientes.add(ingredienteNuevo);
+		
+//      FORMA 2 DE RECORRER (MAS EFICIENTE YA QUE RECORRE LO QUE SEA NECESARIO)	
+		Iterator<Ingrediente>it=ingredientes.iterator();
+		
+		while (it.hasNext()&& !annadido) {
+			Ingrediente ingrediente = (Ingrediente) it.next();
+			
+			if(ingrediente.getNombreIngrediente().equals(ingredienteNuevo.getNombreIngrediente())) {
+				ingrediente.setCantidad(cantidadNueva+ingrediente.getCantidad());
+				annadido=true;
+			}
 		}
+		
 		ingredientes.add(ingredienteNuevo);
+		
 	}
 	
 	public boolean necesitaIngrediente(String nombreIngrediente) {
 		boolean necesario=false;
+		Ingrediente patron= new Ingrediente(nombreIngrediente);
 		
-		if(pasos.contains(nombreIngrediente)) {
+		if(ingredientes.contains(patron)) {
 			necesario=true;
 		}
 		
 		return necesario;
 	}
-	
+	//SI TENGO QUE BORRAR MUCHOS ELEMENTOS RECORRIENDO LA COLECCION DEBO USAR EL ITERADOR
 	public void borrarIngrediente(Ingrediente ingredienteABorrar) throws RecetaException{
-		if(!ingredientes.contains(ingredienteABorrar)) {
-			throw new RecetaException("Error, ingrediente no encontrado ");
+		boolean borrado=false;
+		
+		if(!ingredientes.remove(ingredienteABorrar)) {
+			throw new RecetaException("Error, ingrediente no borrado ");
 		}
-		ingredientes.remove(ingredienteABorrar);
-		if(pasos.contains(ingredienteABorrar.getNombreIngrediente())) {
-			pasos.remove(ingredienteABorrar.getNombreIngrediente());
+	
+		Iterator<String>it=pasos.iterator();
+		
+		while (it.hasNext() && !borrado) {
+			if(pasos.contains(ingredienteABorrar.getNombreIngrediente())) {
+				it.remove(); //BORRA EL ULTIMO QUE SE LE HA PASADO
+				borrado=true;
+			}
+			
 		}
 	}
 	
-
 	public void annadirPasoDetrasDe(String pasoNuevo, String pasoExistente) throws RecetaException{
-		if(!pasos.contains(pasoExistente)) {
-			throw new RecetaException("Error, no se encuentra el paso ");
-		}
 			int pos=pasos.indexOf(pasoExistente);
-			pasos.add(pos, pasoNuevo);
-	}
+			
+			if(pos==-1) {
+				throw new RecetaException("Error, no se encuentra el paso existente");
+			}
+				// pos+1 YA QUE AL ENCONTRAR LA POSICION ANTIGUA DEBE DESPLAZARSE UNO++  
+				pasos.add(pos+1, pasoNuevo);
+		}	
+	
 
 	@Override
 	public int hashCode() {
