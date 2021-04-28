@@ -1,4 +1,4 @@
-package ej7;
+package ej7_2;
 
 public class MercadonaException extends Exception {
 

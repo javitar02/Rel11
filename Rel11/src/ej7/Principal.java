@@ -1,58 +1,99 @@
 package ej7;
+import java.util.*;
 
-import java.util.Scanner;
+
 
 public class Principal {
+	
+	private static final int OPCION_SALIR = 5;
+	
 	private static Scanner teclado=new Scanner(System.in);
-
 	public static void main(String[] args) {
-		Mercadona mercadona=new Mercadona();
-		int opc;
 		
-		do {
-			opc=mostrarMenu();
-			tratarMenu( opc, mercadona);
-		}while (opc!= 5);
+		int opcion;
+		GranAlmacen almacen=new GranAlmacen();
+		
+		do{
+			opcion=mostrarMenu();
+			tratarMenu(opcion, almacen);
+		}while (opcion!=OPCION_SALIR);
 
+	}
+	
+	private static void tratarMenu(int opc, GranAlmacen almacen) {
+		
+		int numeroCaja,numeroCliente;
+		
+		try{
+			switch (opc){
+			case 1:{
+				numeroCaja=introducirNumeroEntero("Introduzca el numero de caja que desea abrir:");
+				almacen.abrirCaja(numeroCaja);
+				System.out.println("Se ha abierto la caja correctamente");
+				break;
+			}
+			case 2:{
+				numeroCaja=introducirNumeroEntero("Introduzca el numero de caja que desea cerrar:");
+				almacen.cerrarCaja(numeroCaja);
+				System.out.println("Se ha cerrado la caja correctamente");
+				break;
+			}
+			case 3:{
+				System.out.println(almacen.nuevoCliente());
+				System.out.println("Se ha annadido un nuevo cliente");
+				break;
+			}
+			case 4:{
+				numeroCaja=introducirNumeroEntero("Introduzca el numero de caja donde desea atender:");
+				numeroCliente=almacen.atenderCliente(numeroCaja);
+				System.out.println("Se ha atendido al cliente " + numeroCliente);
+				break;
+			}
+		
+			case 5:{
+				System.out.println("FIN DEL PROGRAMA");
+				break;
+			}
+			}
+		}catch (CajaException ex){
+			System.out.println(ex.getMessage());
+		}
+		
 	}
 
 	private static int mostrarMenu() {
+		
 		int opcion;
 		
-		System.out.println("BIENVENIDO AL MENU");
-		System.out.println("1.Abrir caja");
-		System.out.println("2.Cerrar caja");
-		System.out.println("3.Nuevo cliente");
-		System.out.println("4.Atender nuevo cliente");
-		System.out.println("5.Salir");
-		
-		System.out.println("Introduce una opcion entre 1 y 5: ");
-		opcion=Integer.parseInt(teclado.nextLine());
+		do{
+			System.out.println("1. Abrir caja");
+			System.out.println("2. Cerrar caja");
+			System.out.println("3. Nuevo cliente");
+			System.out.println("4. Atender cliente");
+			System.out.println("5. Salir");
+			opcion=introducirNumeroEntero("Introduzca la opcion:");
+		}while (opcion<=0 || opcion> OPCION_SALIR);
 		
 		return opcion;
 	}
-	
-	
-	
-	private static void tratarMenu(int opc, Mercadona mercadona) {
 
-		switch (opc) {
-		case 1:
-			
-			break;
-		case 2:
-			
-			
-			
-			break;
-		case 3:
-			
-			
-			
-			break;
-		case 4:
-			
-			break;
-		}
+	private static int introducirNumeroEntero(String enunciado) {
+		
+		int numero=0;
+		boolean hayFallo;
+		
+		do{
+			try{
+				System.out.print(enunciado);
+				numero=Integer.parseInt(teclado.nextLine());
+				hayFallo=false;
+			}catch (NumberFormatException ex){
+				hayFallo=true;
+				System.out.println("ERROR. Solo puedes introducir numeros");
+			}
+		}while (hayFallo);
+		
+		return numero;
 	}
-	}
+
+}

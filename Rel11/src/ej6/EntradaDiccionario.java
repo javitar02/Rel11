@@ -71,11 +71,11 @@ public class EntradaDiccionario implements Comparable<EntradaDiccionario>{
 		return this.palabra.compareTo(o.palabra);
 	}
 	
-	public void annadirSignificado(String significado) {
+	public void annadirSignificado(String significado) throws DiccionarioException {
 		
 		
 		if(this.significados.contains(significado)) {
-			//Excepcion
+			throw new DiccionarioException("Error, ya ha sido añadido");
 		}
 		
 		this.significados.add(significado);
