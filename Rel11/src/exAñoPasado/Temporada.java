@@ -1,5 +1,4 @@
 package exAñoPasado;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Temporada implements Comparable<Temporada>{
@@ -69,8 +68,18 @@ public class Temporada implements Comparable<Temporada>{
 		return capitulos.element();
 	}
 	
+	public String getNombreTemporada() {
+		return nombreTemporada;
+	}
 	
-	
+	public LinkedList<String> getCapitulos() {
+		return capitulos;
+	}
+
+	public int getNumeroOpiniones() {
+		return numeroOpiniones;
+	}
+
 	public double getNotaMedia() {
 		double notaMedia=-1;
 		if (numeroOpiniones==0) {

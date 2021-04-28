@@ -1,20 +1,21 @@
 package exA�oPasado;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Serie {
 	private static final int ANNO_MINIMO = 1900;
 	private String nombreSerie;
 	private int anno;
-	private Tema tema;
+	private Genero genero;
 	private ArrayList<Temporada> temporadas;
 	
 	
-	public Serie(String nombreSerie, int anno, Tema tema) throws SerieException {
+	public Serie(String nombreSerie, int anno, Genero genero) throws SerieException {
 		super();
 		this.nombreSerie = nombreSerie;
 		setAnno(anno);
-		this.tema = tema;
+		this.genero = genero;
 		temporadas=new ArrayList<Temporada>();
 	}
 	/*
@@ -23,7 +24,7 @@ public class Serie {
 	*/
 
 
-	public void annadirTemporada( Temporada temporada) throws SerieException {
+	public void annadirTemporada(Temporada temporada) throws SerieException {
 		if(!temporadas.contains(temporada)) {
 			throw new SerieException("Error, temporada ya a�adida");
 		}
@@ -35,23 +36,58 @@ public class Serie {
 	 * Devuelve un listado de las temporadas de una serie ordenadas
 	 *  de mayor a menor por nota media. De cada temporada se mostrará el nombre, número de capítulos y nota media
 	 */
-	public String listadoTemporadasPorNotaMedia() {
+	public String listadoTemporadasPorNotaMedia() throws SerieException {
 		ArrayList<Temporada>copia=new ArrayList<Temporada>(temporadas);
+		StringBuilder sb=new StringBuilder();
+		
+		if(copia.size()==0) {
+			throw new SerieException("Error, no se encuentra ninguna temporada");
+		}
 		
 		for (Temporada temporada : copia) {
 			copia.add(temporada);
 		}
-		copia.sort(copia);
+		Collections.sort(copia);
 		
-		return null;
+		for (Temporada temporada : copia) {
+			sb.append(temporada.getNombreTemporada()+ " con "+temporada.getCapitulos()+" capitulos y cuya nota media es"+temporada.getNotaMedia());;
+			sb.append("\n");
+		}
+		
+		return sb.toString();
 	}
 	
 	/*Devuelve un listado de las temporadas de una serie ordenadas de menor a mayor por número de capítulos.
 	 *  De cada temporada se mostrará el nombre, número de capítulos y nota media.
 	 */
 	
-	public String listadoTemporadasPorNumeroDeCapitulos() {
+	public String listadoTemporadasPorNumeroDeCapitulos() throws SerieException {
+		if(temporadas.size()==0) {
+			throw new SerieException("Error, no se encontro ninguna temporada");
+		}
 		
+		ArrayList<Temporada>ordenadoPorCapitulos=new ArrayList<>(temporadas);
+		for (Temporada temporada : ordenadoPorCapitulos) {
+			ordenadoPorCapitulos.add(temporada);
+		}
+		
+		
+		Comparator<Temporada> comparador=new Comparator<Temporada>() {
+
+			@Override
+			public int compare(Temporada o1, Temporada o2) {
+				
+				return Integer.compare(o1.getCapitulos(), o2.)
+			}
+			
+		};
+		StringBuilder sb=new StringBuilder();
+		for (Temporada temporada : ordenadoPorCapitulos) {
+			sb.append(temporada.getNombreTemporada()+ " con "+temporada.getCapitulos()+" capitulos y cuya nota media es"+temporada.getNotaMedia());;
+			sb.append("\n");
+		}
+		
+		return sb.toString();
 	}
 
 	public String getNombreSerie() {
@@ -77,13 +113,13 @@ public class Serie {
 	}
 
 
-	public Tema getTema() {
-		return tema;
+	public Genero getTema() {
+		return genero;
 	}
 
 
-	public void setTema(Tema tema) {
-		this.tema = tema;
+	public void setTema(Genero genero) {
+		this.genero = genero;
 	}
 	
 	public int numeroTemporadas() {
@@ -92,7 +128,7 @@ public class Serie {
 
 
 	public String toString() {
-		return  "Serie " + nombreSerie + " Anno " + anno + " Tema " + tema + "Numero temporadadas " + numeroTemporadas();
+		return  "Serie " + nombreSerie + " Anno " + anno + " Tema " + genero + "Numero temporadadas " + numeroTemporadas();
 	}
 
 	@Override

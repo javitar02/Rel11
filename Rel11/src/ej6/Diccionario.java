@@ -12,8 +12,7 @@ public class Diccionario {
 		this.entradas = new HashMap<String, EntradaDiccionario>();
 	}
 	
-	public void annadirPalabra(String palabra, String significado) {
-		
+		public void annadirPalabra(String palabra,String significado) throws DiccionarioException {
 		EntradaDiccionario entradaRecogida = this.entradas.get(palabra);
 		EntradaDiccionario entradaNueva;
 		

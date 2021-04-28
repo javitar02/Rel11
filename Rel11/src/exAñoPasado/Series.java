@@ -1,7 +1,8 @@
 package exA�oPasado;
 import java.util.HashMap;
+import java.util.Map;
 
-public class Series {
+public class Series  {
 
 	private HashMap<String, Serie> mapSeries;
 	
@@ -21,11 +22,15 @@ public class Series {
 	 */
 	
 	public int numeroDeTemporadasDeUnaSerie(String nombreSerie) throws SerieException{
+		int numTemporadas;
 		if(!mapSeries.containsKey(nombreSerie)) {
 			throw new SerieException("Error, serie no encontrada con el nombre "+nombreSerie);
 		}
 		
-		return mapSeries.value;
+		for (Temporada serie: mapSeries.keySet()) {
+			numTemporadas=serie.getCapitulos();
+		}
+		return mapSeries;
 	}
 	
 	
@@ -36,7 +41,7 @@ public class Series {
 	 * @param nuevoTema
 	 * @throws SerieException
 	 */
-	public void modificarTema( String nombreSerie, Tema nuevoTema) throws SerieException {
+	public void modificarGenero( String nombreSerie, Genero nuevoGenero) throws SerieException {
 		if(!mapSeries.containsKey(nombreSerie)) {
 			throw new SerieException("Error, ")
 		}
@@ -47,7 +52,7 @@ public class Series {
 	 * Para cada serie se mostrará su nombre, año y número de temporadas. 
 	 * Si no hay ninguna serie de ese tema saltará la excepción. (1,5 ptos)
 	 */
-	public  String listadoOrdenadoSeriesDeUnTema( Tema tema)  throws SerieException {
+	public  String listadoOrdenadoSeriesDeUnGenero( Genero Genero)  throws SerieException {
 		return null;
 	}
 	

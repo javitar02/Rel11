@@ -1,4 +1,4 @@
 package exAñoPasado;
-public enum Tema {
+public enum Genero {
 	DRAMA, COMEDIA,INTRIGA, CIENCIAFICCION
 }

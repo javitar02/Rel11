@@ -14,7 +14,7 @@ public class EntradaDiccionario implements Comparable<EntradaDiccionario>{
 		this.significados = new ArrayList<String>();
 	}
 	
-	public EntradaDiccionario(String palabraInicial, String significado) {
+	public EntradaDiccionario(String palabraInicial, String significado) throws DiccionarioException {
 
 		this.palabra = palabraInicial;
 		this.significados = new ArrayList<String>();

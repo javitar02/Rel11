@@ -8,7 +8,7 @@ public class Principal {
 		try {
 			Series netflix=new Series();
 			
-			Serie serie1=new Serie("BREAKING BAD",2000, Tema.INTRIGA);
+			Serie serie1=new Serie("BREAKING BAD",2000, Genero.INTRIGA);
 			Temporada temporada1=new Temporada("Temporada 1");
 			temporada1.annadirCapitulo("El primero");
 			temporada1.annadirCapitulo("el segundo");
@@ -20,7 +20,7 @@ public class Principal {
 			serie1.annadirTemporada(temporada1);
 			serie1.annadirTemporada(temporada2);
 			
-			Serie serie2=new Serie("Friends",2000, Tema.COMEDIA);
+			Serie serie2=new Serie("Friends",2000, Genero.COMEDIA);
 			
 			netflix.annadirSerie(serie1);
 			netflix.annadirSerie(serie2);
