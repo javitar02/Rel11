@@ -26,11 +26,9 @@ public class Series  {
 		if(!mapSeries.containsKey(nombreSerie)) {
 			throw new SerieException("Error, serie no encontrada con el nombre "+nombreSerie);
 		}
-		
-		for (Temporada serie: mapSeries.keySet()) {
-			numTemporadas=serie.getCapitulos();
-		}
-		return mapSeries;
+	
+		numTemporadas=mapSeries.size();
+		return numTemporadas;
 	}
 	
 	
@@ -43,7 +41,7 @@ public class Series  {
 	 */
 	public void modificarGenero( String nombreSerie, Genero nuevoGenero) throws SerieException {
 		if(!mapSeries.containsKey(nombreSerie)) {
-			throw new SerieException("Error, ")
+			throw new SerieException("Error");
 		}
 		
 		

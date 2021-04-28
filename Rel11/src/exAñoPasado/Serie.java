@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Serie {
+public class Serie implements Comparable<Serie>{
 	private static final int ANNO_MINIMO = 1900;
 	private String nombreSerie;
 	private int anno;
@@ -75,9 +75,9 @@ public class Serie {
 		Comparator<Temporada> comparador=new Comparator<Temporada>() {
 
 			@Override
-			public int compare(Temporada o1, Temporada o2) {
+			public int compare(Serie o1, Serie o2) {
 				
-				return Integer.compare(o1.getCapitulos(), o2.)
+				return Integer.compare(o1., o2.)
 			}
 			
 		};
@@ -154,6 +154,11 @@ public class Serie {
 		} else if (!nombreSerie.equals(other.nombreSerie))
 			return false;
 		return true;
+	}
+	@Override
+	public int compareTo(Serie o) {
+	
+		return Integer.compare(this.numeroTemporadas(), o.numeroTemporadas());
 	}
 
 
