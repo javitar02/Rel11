@@ -1,6 +1,9 @@
-package exA�oPasado;
+package exAnnoPasado;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
+
 
 public class Series  {
 
@@ -22,13 +25,16 @@ public class Series  {
 	 */
 	
 	public int numeroDeTemporadasDeUnaSerie(String nombreSerie) throws SerieException{
-		int numTemporadas;
-		if(!mapSeries.containsKey(nombreSerie)) {
+		Serie serie=mapSeries.get(nombreSerie);
+		int numTemp=0;
+		
+		if(serie==null) {
 			throw new SerieException("Error, serie no encontrada con el nombre "+nombreSerie);
+		}else {
+			numTemp=serie.numeroTemporadas();
 		}
-	
-		numTemporadas=mapSeries.size();
-		return numTemporadas;
+		
+		return numTemp;
 	}
 	
 	
@@ -40,10 +46,19 @@ public class Series  {
 	 * @throws SerieException
 	 */
 	public void modificarGenero( String nombreSerie, Genero nuevoGenero) throws SerieException {
-		if(!mapSeries.containsKey(nombreSerie)) {
-			throw new SerieException("Error");
+	
+		
+		if(mapSeries.get(nombreSerie).getTema().equals(nuevoGenero)) {
+			throw new SerieException("Error, no se puede cambiar al genero que tenia antes");
 		}
 		
+		if(!mapSeries.containsKey(nombreSerie)) {
+			throw new SerieException("Error, no se encuentra la serie");
+		}
+		
+		//SI SE HACE CON UNA VARIABLE INTERNA NO CAMBIA A LA SERIE DEL HASHMAP SI NO A LA
+		//VARIABLE DEL METODO SOLO
+		mapSeries.get(nombreSerie).setTema(nuevoGenero);
 		
 	}
 	/* Devolverá un listado ordenado de forma creciente por el año de la serie. 
@@ -51,7 +66,37 @@ public class Series  {
 	 * Si no hay ninguna serie de ese tema saltará la excepción. (1,5 ptos)
 	 */
 	public  String listadoOrdenadoSeriesDeUnGenero( Genero Genero)  throws SerieException {
-		return null;
+		ArrayList<Serie>aux=new ArrayList<Serie>();
+		
+		for (Serie serie : mapSeries.values()) {
+			if(serie.getTema().equals(Genero)) {
+				aux.add(serie);
+			}
+		}
+		
+		if(aux.size()==0) {
+			throw new SerieException("Error, no se encontro ninguna serie");
+		}
+		
+		Collections.sort(aux,new Comparator<Serie>() {
+
+			@Override
+			public int compare(Serie o1, Serie o2) {
+				
+				return Integer.compare(o1.getAnno(),o2.getAnno());
+			}
+			
+		});
+		
+		StringBuilder sb=new StringBuilder();
+		
+		for (Serie serie2: aux) {
+			sb.append(serie2);
+			sb.append("\n");
+			
+		}
+		
+		return sb.toString();
 	}
 	
 	

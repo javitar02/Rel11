@@ -1,4 +1,4 @@
-package exAñoPasado;
+package exAnnoPasado;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,8 +25,9 @@ public class Serie implements Comparable<Serie>{
 
 
 	public void annadirTemporada(Temporada temporada) throws SerieException {
+		
 		if(!temporadas.contains(temporada)) {
-			throw new SerieException("Error, temporada ya añadida");
+			throw new SerieException("Error, temporada ya aÃ±adida");
 		}
 		temporadas.add(temporadas.size()-1,temporada);
 		
@@ -62,29 +63,34 @@ public class Serie implements Comparable<Serie>{
 	 */
 	
 	public String listadoTemporadasPorNumeroDeCapitulos() throws SerieException {
-		if(temporadas.size()==0) {
-			throw new SerieException("Error, no se encontro ninguna temporada");
+	ArrayList<Temporada>aux=new ArrayList<Temporada>();
+		
+		for (Temporada temporada : temporadas) {
+			{
+				aux.add(temporada);
+			}
 		}
 		
-		ArrayList<Temporada>ordenadoPorCapitulos=new ArrayList<>(temporadas);
-		for (Temporada temporada : ordenadoPorCapitulos) {
-			ordenadoPorCapitulos.add(temporada);
+		if(aux.size()==0) {
+			throw new SerieException("Error, no se encontro ninguna serie");
 		}
 		
-		
-		Comparator<Temporada> comparador=new Comparator<Temporada>() {
+		Collections.sort(aux,new Comparator<Temporada>() {
 
 			@Override
-			public int compare(Serie o1, Serie o2) {
+			public int compare(Temporada o1, Temporada o2) {
 				
-				return Integer.compare(o1., o2.)
+				return Integer.compare(o1.numCapitulos(),o2.numCapitulos());
 			}
 			
-		};
+		});
+		
 		StringBuilder sb=new StringBuilder();
-		for (Temporada temporada : ordenadoPorCapitulos) {
-			sb.append(temporada.getNombreTemporada()+ " con "+temporada.getCapitulos()+" capitulos y cuya nota media es"+temporada.getNotaMedia());;
+		
+		for (Temporada temp: aux) {
+			sb.append(temp);
 			sb.append("\n");
+			
 		}
 		
 		return sb.toString();

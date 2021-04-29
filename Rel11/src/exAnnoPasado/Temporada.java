@@ -1,5 +1,7 @@
-package exA�oPasado;
+package exAnnoPasado;
+import java.util.Iterator;
 import java.util.LinkedList;
+
 
 public class Temporada implements Comparable<Temporada>{
 	
@@ -15,6 +17,9 @@ public class Temporada implements Comparable<Temporada>{
 		numeroOpiniones=0;
 	}
 	
+	public int numCapitulos() {
+		return capitulos.size();
+	}
 	public void annadirCapitulo(String capitulo) {
 		capitulos.add(capitulo);
 	}
@@ -40,32 +45,44 @@ public class Temporada implements Comparable<Temporada>{
 	 * 
 	 */
 	public void eliminarCapitulosDesdeEste(String nombreCapituloInicial) throws SerieException{
-		int i;
-		int pos=capitulos.indexOf(nombreCapituloInicial);
+		boolean inicio=false;
+		Iterator<String>it=capitulos.iterator();
 		
-		if(pos==-1) {
-			throw new SerieException("Error, no se encuentra el capitulo "+nombreCapituloInicial);
-		}
-		
-		if(!capitulos.contains(nombreCapituloInicial)) {
-			throw new SerieException("Error, no se encuentra el capitulo "+nombreCapituloInicial);
-		}
-		for (i=pos;i<capitulos.size()-1;i++) {
-				capitulos.remove();
+		while (it.hasNext()) {
+			String cap = it.next();
+			if(cap.equals(nombreCapituloInicial)) {
+				inicio=true;
+			}
+			if(inicio==true) {
+				it.remove();
 			}
 		}
-		
+		if(!inicio) {
+			throw new SerieException("Error, capitulo no encontrado");
+		}
+	}
 	
 	/* Devuelve el nombre del primer capítulo que contiene la palabra que  pasa por parámetro.
 	 *  Si no lo encuentra salta la excepción 
 	 */
 	
 	public String primerCapituloQueContieneEstaPalabra(String palabra) throws SerieException {
-		if(!capitulos.contains(palabra)) {
-			throw new SerieException("Error, no hay capitulos que empiezen por "+palabra);
+		boolean encontrado=false;
+		String capEncontrado=null;
+		Iterator<String>it=capitulos.iterator();
+		
+		while (it.hasNext() &&!encontrado) {
+			String string = (String) it.next();
+			if(string.contains(palabra)) {
+				encontrado=true;
+				capEncontrado=string;
+			}
+		}
+		if(!encontrado) {
+			throw new SerieException("Error, no hay capitulos que contengan la palabra"+palabra);
 		}
 		
-		return capitulos.element();
+		return capEncontrado;
 	}
 	
 	public String getNombreTemporada() {

@@ -1,4 +1,4 @@
-package exAñoPasado;
+package exAnnoPasado;
 public class SerieException extends Exception {
 
 	
